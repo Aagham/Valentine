@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Rose Day My Polar Bear ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body{
+            margin:0;
+            font-family:'Segoe UI', sans-serif;
+            text-align:center;
+        }
+
+        .center{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            background:black;
+            color:gold;
+        }
+
+        input, button{
+            padding:10px;
+            margin-top:10px;
+            font-size:16px;
+        }
+
+        /* ROSE PAGE STYLES */
+        .roseBody {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('https://img.freepik.com/premium-photo/pink-background-with-red-roses-top-right-corner_679964-9018.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .overlay {
+            background: rgba(0,0,0,0.6);
+            padding: 40px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .heart {
+            font-size: 30px;
+            margin-top: 20px;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+
+    <script>
+        function checkPassword(){
+            var pass = document.getElementById("pass").value;
+            if(pass === "polar"){   // change password here
+                document.getElementById("passPage").style.display="none";
+                document.getElementById("rosePage").style.display="flex";
+            } else {
+                alert("Wrong password ❤️");
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- PASSWORD PAGE -->
+    <div id="passPage" class="center">
+        <h2>Enter Secret Password ❤️</h2>
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="checkPassword()">Unlock</button>
+    </div>
+
+    <!-- ROSE DAY PAGE -->
+    <div id="rosePage" class="roseBody" style="display:none;">
+        <div class="overlay">
+            <h1>🌹Happy Rose Day My Gulaboo❤️</h1>
+            <p>
+                This is Day 1 of 7…<br><br>
+                If love were code, you would be my infinite loop — running in my heart forever.<br>
+                This rose is just the beginning… the real surprise is yet to come.<br>
+                how deeply you are loved.
+            </p>
+            <div class="heart">❤️</div>
+        </div>
+    </div>
+
+</body>
+</html>
