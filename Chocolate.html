@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chocolate Day 🍫❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    overflow:hidden;
+    color:white;
+    text-align:center;
+}
+
+/* ---------------- HEART SCANNER ---------------- */
+#scanner{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:linear-gradient(45deg,#200122,#6f0000);
+}
+
+.heart{
+    font-size:90px;
+    animation:beat 1s infinite;
+}
+
+@keyframes beat{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+button{
+    padding:10px 18px;
+    margin-top:20px;
+    border:none;
+    border-radius:8px;
+    background:#800000;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+/* ---------------- PASSWORD ---------------- */
+#passwordPage{
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:#3b1d0f;
+}
+
+input{
+    padding:10px;
+    font-size:16px;
+    border-radius:6px;
+    border:none;
+    margin-top:10px;
+}
+
+/* ---------------- CHOCOLATE PAGE ---------------- */
+#mainPage{
+    display:none;
+    min-height:100vh;
+     background: url('https://i.pinimg.com/originals/f3/a5/5f/f3a55f8fe67d4471b0f553219d76337e.jpg') no-repeat center center/cover;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#mainPage::before{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:0;
+}
+
+/* Glow Heading */
+h1{
+    animation:glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow{
+    from{ text-shadow:0 0 10px #ff4d6d; }
+    to{ text-shadow:0 0 25px #ff99ac; }
+}
+
+/* Floating Box */
+.container{
+    position:relative;
+    z-index:2;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding:40px;
+    border-radius:20px;
+    width:90%;
+    max-width:600px;
+    animation:floatBox 4s ease-in-out infinite;
+}
+@keyframes floatBox{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+/* Chocolate rain */
+.choco{
+    position:absolute;
+    top:-50px;
+    font-size:25px;
+    animation:fall linear infinite;
+    opacity:0.7;
+    z-index:1;
+}
+@keyframes fall{
+    to{ transform:translateY(110vh); }
+}
+
+/* Spark animation */
+@keyframes spark{
+    to{
+        transform:translateY(-40px);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ❤️ HEART SCANNER -->
+<div id="scanner">
+    <h2>❤️ Heart Scanner ❤️</h2>
+    <p>Place your heart here to scan…</p>
+    <div class="heart">❤️</div>
+    <button onclick="openPassword()">Scan Heart</button>
+</div>
+
+<!-- 🔐 PASSWORD PAGE -->
+<div id="passwordPage">
+    <h2>🔐 Enter Secret Password</h2>
+    <p>Hint: A sweet mix of our names 🍫❤️</p>
+    <input type="password" id="pass" placeholder="Password">
+    <button onclick="checkPass()">Unlock</button>
+</div>
+
+<!-- 🍫 CHOCOLATE DAY PAGE -->
+<div id="mainPage">
+
+<script>
+for(let i=0;i<40;i++){
+    let c=document.createElement("div");
+    c.className="choco";
+    c.innerHTML="🍫";
+    c.style.left=Math.random()*100+"vw";
+    c.style.animationDuration=(3+Math.random()*5)+"s";
+    document.body.appendChild(c);
+}
+</script>
+
+<div class="container">
+    <h1>🍫 Happy Chocolate Day, My Sweetest Love ❤️</h1>
+    <p>You are sweeter than every chocolate in this world.</p>
+
+    <button onclick="showMsg(1)">Dairy Milk</button>
+    <button onclick="showMsg(2)">KitKat</button>
+    <button onclick="showMsg(3)">Ferrero Rocher</button>
+    <button onclick="showMsg(4)">Dark Chocolate</button>
+
+    <div id="message" style="margin-top:20px;"></div>
+
+    <div id="final" style="display:none; margin-top:20px; color:#ffd700;">
+        Nothing is sweeter than YOU ❤️<br><br>
+        Saving the best sweetness for Valentine’s Day…
+    </div>
+</div>
+
+</div>
+
+<script>
+function openPassword(){
+    document.getElementById("scanner").style.display="none";
+    document.getElementById("passwordPage").style.display="flex";
+}
+
+function checkPass(){
+    if(document.getElementById("pass").value==="aagmegha"){
+        document.getElementById("passwordPage").style.display="none";
+        document.getElementById("mainPage").style.display="flex";
+    }else{
+        alert("Wrong password ❤️");
+    }
+}
+
+let clicked=[false,false,false,false];
+function showMsg(n){
+    let msg=document.getElementById("message");
+
+    if(n===1){msg.innerHTML="Just like Dairy Milk, you make my life smooth and sweet."; clicked[0]=true;}
+    if(n===2){msg.innerHTML="Like KitKat, every moment with you deserves a break to smile."; clicked[1]=true;}
+    if(n===3){msg.innerHTML="Ferrero Rocher? Fancy… but still not as special as you."; clicked[2]=true;}
+    if(n===4){msg.innerHTML="Dark chocolate is deep… just like my feelings for you."; clicked[3]=true;}
+
+    if(clicked.every(v=>v)){
+        document.getElementById("final").style.display="block";
+    }
+}
+
+/* Sparkle effect on button click */
+function sparkle(x,y){
+    for(let i=0;i<8;i++){
+        let s=document.createElement("div");
+        s.innerHTML="✨";
+        s.style.position="fixed";
+        s.style.left=x+"px";
+        s.style.top=y+"px";
+        s.style.fontSize="18px";
+        s.style.pointerEvents="none";
+        s.style.animation="spark 1s linear forwards";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),1000);
+    }
+}
+
+document.querySelectorAll("button").forEach(btn=>{
+    btn.addEventListener("click",e=>{
+        sparkle(e.clientX,e.clientY);
+    });
+});
+</script>
+
+</body>
+</html>
