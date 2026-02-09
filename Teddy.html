@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teddy Day 🧸❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    overflow:hidden;
+    text-align:center;
+    color:white;
+}
+
+/* ---------- SCANNER ---------- */
+#scanner{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+}
+
+.heart{font-size:80px;animation:beat 1s infinite;}
+@keyframes beat{50%{transform:scale(1.2);}}
+
+/* ---------- PASSWORD ---------- */
+#passwordPage{
+    display:none;
+    height:100vh;
+    background:#f8cdda;
+    color:#6a1b1a;
+}
+
+/* ---------- TEDDY PAGE ---------- */
+#mainPage{
+    display:none;
+    height:100vh;
+    background:linear-gradient(45deg,#ffdde1,#ee9ca7);
+    position:relative;
+    overflow:hidden;
+}
+
+/* FLOAT TEDDY SECTION */
+.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    animation:floatMix 8s ease-in-out infinite;
+}
+
+@keyframes floatMix{
+    0%{transform:translate(-50%,-50%) translate(0,0);}
+    25%{transform:translate(-50%,-50%) translate(20px,-20px);}
+    50%{transform:translate(-50%,-50%) translate(-20px,20px);}
+    75%{transform:translate(-50%,-50%) translate(15px,-10px);}
+    100%{transform:translate(-50%,-50%) translate(0,0);}
+}
+
+/* FLOATING TEDDIES */
+.heartFloat{
+    position:absolute;
+    opacity:0.6;
+    animation:floatUp linear infinite;
+}
+@keyframes floatUp{to{transform:translateY(-110vh);}}
+
+/* BUTTONS */
+button{
+    padding:10px 14px;
+    margin:8px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    background:#6a1b1a;
+    color:white;
+}
+
+#message{margin-top:20px;min-height:60px;}
+#final{margin-top:20px;display:none;font-weight:bold;}
+
+/* -------- SURPRISE POPUP -------- */
+#surpriseBox{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
+}
+
+#surpriseImg{
+    width:260px;
+    border-radius:20px;
+    z-index:2;
+}
+
+/* FIREWORK PARTICLES */
+.spark{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:yellow;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
+}
+@keyframes explode{
+    to{
+        transform:translate(var(--x), var(--y));
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ❤️ SCANNER -->
+<div id="scanner">
+    <h2>❤️ Heart Scanner ❤️</h2>
+    <div class="heart">❤️</div>
+    <button onclick="openPassword()">Scan Heart</button>
+</div>
+
+<!-- 🔐 PASSWORD -->
+<div id="passwordPage">
+    <div style="height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;">
+        <h2>🔐 Enter Password</h2>
+        <p id="hintText">Hint: Which teddy name do I call you most of the time? 🧸</p>
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="checkPass()">Unlock</button>
+    </div>
+</div>
+
+<!-- 🧸 TEDDY PAGE -->
+<div id="mainPage">
+
+<script>
+const teddies=["🧸","🐻","🐻‍❄️"];
+for(let i=0;i<40;i++){
+    let h=document.createElement("div");
+    h.className="heartFloat";
+    h.innerHTML=teddies[Math.floor(Math.random()*teddies.length)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="-50px";
+    h.style.fontSize=(20+Math.random()*20)+"px";
+    h.style.animationDuration=(8+Math.random()*6)+"s";
+    document.getElementById("mainPage").appendChild(h);
+}
+</script>
+
+<div class="container">
+    <div style="font-size:120px;">🧸</div>
+    <h1>Happy Teddy Day ❤️</h1>
+
+    <button onclick="showMsg(1)">🧸 Hug</button>
+    <button onclick="showMsg(2)">💭 Miss You</button>
+    <button onclick="showMsg(3)">😊 Smile</button>
+    <button onclick="showMsg(4)">🌙 Sleep</button>
+    <button onclick="openSurprise()">🎁 Surprise</button>
+
+    <div id="message"></div>
+    <div id="final">This teddy is small… but my love is HUGE ❤️</div>
+</div>
+
+</div>
+
+<!-- 🎁 SURPRISE -->
+<div id="surpriseBox" onclick="closeSurprise()">
+    <img src="bear.jpeg" id="surpriseImg">
+</div>
+
+<script>
+function openPassword(){
+    scanner.style.display="none";
+    passwordPage.style.display="block";
+}
+function checkPass(){
+    if(pass.value==="Panda"){
+        passwordPage.style.display="none";
+        mainPage.style.display="block";
+    }else alert("Wrong password");
+}
+
+let clicked=[false,false,false,false];
+function showMsg(n){
+    const msg = message;
+
+    if(n===1){
+        msg.innerHTML = "Close your eyes… can you feel it? I’m hugging you so tight that even distance feels shy ❤️🤗";
+        clicked[0]=true;
+    }
+
+    if(n===2){
+        msg.innerHTML = "I miss you in every second, every breath, every heartbeat… you live in my thoughts 🥺💭";
+        clicked[1]=true;
+    }
+
+    if(n===3){
+        msg.innerHTML = "When you smile, my whole world lights up… so please smile for me 😊✨";
+        clicked[2]=true;
+    }
+
+    if(n===4){
+        msg.innerHTML = "Sleep peacefully, my love… my prayers and thoughts are wrapping you like a warm blanket 🌙💤";
+        clicked[3]=true;
+    }
+
+    if(clicked.every(v=>v)) final.style.display="block";
+}
+
+/* -------- SURPRISE + FIREWORK -------- */
+function openSurprise(){
+    surpriseBox.style.display="flex";
+    fireworks();
+}
+function closeSurprise(){
+    surpriseBox.style.display="none";
+}
+
+function fireworks(){
+    for(let i=0;i<80;i++){
+        let s=document.createElement("div");
+        s.className="spark";
+        s.style.left="50%";
+        s.style.top="50%";
+        s.style.setProperty('--x',(Math.random()*400-200)+"px");
+        s.style.setProperty('--y',(Math.random()*400-200)+"px");
+        surpriseBox.appendChild(s);
+        setTimeout(()=>s.remove(),1000);
+    }
+}
+</script>
+
+</body>
+</html>
