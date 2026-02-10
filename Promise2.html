@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Promise Day My Love 🤝❤️</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: url('bg.jpg.jpeg') no-repeat center center/cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .overlay {
+        background: rgba(0,0,0,0.7);
+        padding: 40px;
+        border-radius: 15px;
+        width: 85%;
+        max-width: 700px;
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 40px;
+        margin-bottom: 25px;
+        color: #FFD700;
+        text-shadow: 2px 2px 8px black;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        color: #FFD700;
+        font-size: 20px;
+        line-height: 1.9;
+        text-shadow: 2px 2px 6px black;
+    }
+
+    li::before { content: "❤️ "; }
+
+    .footer {
+        margin-top: 25px;
+        font-size: 18px;
+        color: #FFD700;
+        text-shadow: 2px 2px 6px black;
+    }
+
+    .promiseBtn {
+        margin-top: 25px;
+        padding: 12px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        background-color: #FFD700;
+        color: black;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .promiseBtn:hover {
+        background-color: #ffcc00;
+        transform: scale(1.05);
+    }
+
+    /* Floating Hearts */
+    #heartContainer{
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .heartFloat{
+        position: absolute;
+        bottom: -50px;
+        animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp{
+        from{ transform: translateY(0); opacity: 1; }
+        to{ transform: translateY(-110vh); opacity: 0; }
+    }
+</style>
+</head>
+
+<body onload="initPage()">
+
+<div id="heartContainer"></div>
+
+<audio id="bgMusic" src="I Promise.mp3" loop></audio>
+
+<div class="overlay">
+    <h1>🤝 Happy Promise Day My Love ❤️</h1>
+
+    <ul>
+        <li>I will always respect you</li>
+        <li>I will support your dreams</li>
+        <li>I will listen to you</li>
+        <li>I will stand by you in tough times</li>
+        <li>I will love you consistently</li>
+    </ul>
+
+    <div class="footer">
+        These are not just words.<br>
+        These are promises from my heart.<br><br>
+        — Yours, Aagham ❤️
+    </div>
+
+    <button class="promiseBtn"
+        onclick="playMusic(); alert('Now you are officially mine forever ❤️')">
+        I Accept Your Promises
+    </button>
+</div>
+
+<script>
+// ---------- INIT ----------
+function initPage(){
+    startHearts();
+
+    // try autoplay (will work after first user interaction)
+    document.body.addEventListener('click', playMusic, { once: true });
+}
+
+// ---------- MUSIC ----------
+function playMusic(){
+    const music = document.getElementById("bgMusic");
+    music.play().catch(()=>{});
+}
+
+// ---------- Floating Hearts ----------
+function startHearts(){
+    const container = document.getElementById("heartContainer");
+    const hearts=["❤️","💖","💘","💝","💕","💗"];
+
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heartFloat";
+        h.innerHTML=hearts[Math.floor(Math.random()*hearts.length)];
+
+        h.style.left=Math.random()*100+"vw";
+        h.style.fontSize=(18+Math.random()*25)+"px";
+        h.style.animationDuration=(5+Math.random()*5)+"s";
+
+        container.appendChild(h);
+        setTimeout(()=>{ h.remove(); },10000);
+    },300);
+}
+</script>
+
+</body>
+</html>
