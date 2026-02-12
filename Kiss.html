@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catch My Kiss 💋</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+/* Background */
+body{
+    height:100vh;
+    overflow:hidden;
+    background: url("collage.jpeg") no-repeat center center;
+    background-size: contain;
+    background-color:#000;
+}
+
+/* Overlay */
+.overlay{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.45);pointer-events:none;
+}
+
+/* Score */
+#scoreBox{
+    position:fixed;top:20px;left:20px;
+    font-size:22px;padding:10px 20px;border-radius:20px;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);color:#fff;z-index:10;
+}
+
+/* Flirt Line */
+#flirtLine{
+    position:fixed;
+    top:80px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.6);
+    color:#fff;
+    padding:8px 18px;
+    border-radius:15px;
+    font-size:18px;
+    opacity:0;
+    transition:opacity 1.5s;
+    z-index:15;
+}
+
+/* Music Button */
+#musicBtn{
+    position:fixed;top:20px;right:20px;
+    padding:10px 20px;border:none;border-radius:20px;
+    background:#fff;cursor:pointer;font-weight:bold;z-index:10;
+}
+
+/* Falling Kiss */
+.kiss{
+    position:absolute;
+    font-size:40px;
+    cursor:pointer;
+    animation: fall linear forwards;
+}
+@keyframes fall{
+    0%{ transform:translateY(-10vh); }
+    100%{ transform:translateY(110vh); }
+}
+
+/* Big Kiss */
+#bigKiss{
+    display:none;
+    position:fixed;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    font-size:90px;
+    cursor:pointer;
+    animation:pulse 1.2s infinite;
+    z-index:20;
+}
+@keyframes pulse{
+    0%,100%{ transform:translate(-50%,-50%) scale(1); }
+    50%{ transform:translate(-50%,-50%) scale(1.2); }
+}
+
+/* Quote */
+#quoteBox{
+    display:none;
+    position:fixed;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:20px 30px;
+    border-radius:15px;
+    font-size:20px;
+    text-align:center;
+    max-width:80%;
+    color:#fff;
+    background:rgba(0,0,0,0.65);
+    backdrop-filter: blur(8px);
+    z-index:30;
+}
+
+/* Celebration float */
+.floatUp{
+    position:fixed;
+    bottom:-40px;
+    font-size:28px;
+    animation: floatUpAnim linear forwards;
+    pointer-events:none;
+    z-index:25;
+}
+@keyframes floatUpAnim{
+    from{ transform:translateY(0); opacity:1; }
+    to{ transform:translateY(-110vh); opacity:0; }
+}
+
+/* Sparkle */
+.sparkle{
+    position:fixed;
+    width:6px;height:6px;
+    background:white;border-radius:50%;
+    box-shadow:0 0 10px white,0 0 20px white;
+    animation:sparkleAnim 1s ease-out forwards;
+    pointer-events:none;z-index:26;
+}
+@keyframes sparkleAnim{
+    from{ transform:scale(0); opacity:1; }
+    to{ transform:scale(2); opacity:0; }
+}
+
+/* 🔒 Lock Screen */
+#lockScreen{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    overflow:hidden;
+}
+.scanner{
+    position:absolute;
+    width:100%;
+    height:4px;
+    background:red;
+    top:0;
+    animation:scan 3s linear infinite;
+    box-shadow:0 0 20px red,0 0 40px red;
+}
+@keyframes scan{
+    0%{top:0;}
+    100%{top:100%;}
+}
+.lockBox{
+    text-align:center;
+    color:white;
+    z-index:2;
+}
+.heart{
+    font-size:70px;
+    animation:pulseHeart 1s infinite;
+}
+@keyframes pulseHeart{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+}
+.lockBox input{
+    padding:10px;
+    width:220px;
+    border:none;
+    border-radius:20px;
+    margin-top:15px;
+    text-align:center;
+    font-size:16px;
+}
+.lockBox button{
+    margin-top:10px;
+    padding:10px 25px;
+    border:none;
+    border-radius:20px;
+    background:red;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+#hint{
+    margin-top:8px;
+    font-size:14px;
+    color:#ffb3b3;
+    font-style:italic;
+}
+#errorMsg{
+    color:#ff4d4d;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 Lock Screen -->
+<div id="lockScreen">
+    <div class="scanner"></div>
+    <div class="lockBox">
+        <div class="heart">❤️</div>
+        <h2>Heart Scanner</h2>
+        <p>Enter Password to Catch My Kisses 💋</p>
+        <input type="password" id="passInput" placeholder="Enter Password">
+        <p id="hint">Hint: The day my baby girl fell to earth❤️</p>
+        <button onclick="checkPass()">Unlock</button>
+        <p id="errorMsg"></p>
+    </div>
+</div>
+
+<div class="overlay"></div>
+
+<div id="scoreBox">Kisses Caught: <span id="score">0</span></div>
+<div id="flirtLine"></div>
+<button id="musicBtn">Mine 🎵</button>
+
+<div id="bigKiss">💋</div>
+<div id="quoteBox"></div>
+
+<audio id="bgMusic" loop>
+    <source src="music_kiss.mpeg" type="audio/mpeg">
+</audio>
+
+<script>
+let score = 0;
+
+const flirtQuotes = [
+"That kiss was dangerously sweet 💋",
+"Careful… you’re getting addicted to my kisses 😘",
+"You catch kisses like you catch my heart ❤️",
+"Each kiss brings you closer to me 💞",
+"Your lips must be smiling right now 😍",
+"This one was stolen just for you 💋",
+"I think you liked that kiss a little too much 😏",
+"My kisses know the way to you 💖",
+"You’re officially under my kiss spell ✨",
+"Save some kisses for later 😘"
+];
+
+function createKiss(){
+    let kiss = document.createElement("div");
+    kiss.className = "kiss";
+    kiss.innerHTML = "💋";
+    kiss.style.left = Math.random() * 95 + "vw";
+    kiss.style.animationDuration = (Math.random()*6 + 8) + "s";
+    document.body.appendChild(kiss);
+
+    kiss.addEventListener("click", ()=>{
+        score++;
+        document.getElementById("score").innerText = score;
+        kiss.remove();
+
+        let line = flirtQuotes[Math.floor(Math.random()*flirtQuotes.length)];
+        let box = document.getElementById("flirtLine");
+        box.innerText = line;
+        box.style.opacity = "1";
+        setTimeout(()=>{ box.style.opacity = "0"; },1500);
+
+        if(score === 10){
+            document.getElementById("bigKiss").style.display="block";
+        }
+    });
+
+    setTimeout(()=>kiss.remove(),14000);
+}
+setInterval(createKiss, 1000);
+
+/* Music */
+let music = document.getElementById("bgMusic");
+document.getElementById("musicBtn").onclick = ()=> music.play();
+document.body.addEventListener('click', ()=> music.play(), {once:true});
+
+/* Celebration */
+function floatCelebration(){
+    const items = ["🌸","🌺","🌹","❤️","💖","💕"];
+    for(let i=0;i<40;i++){
+        let el = document.createElement("div");
+        el.className = "floatUp";
+        el.innerHTML = items[Math.floor(Math.random()*items.length)];
+        el.style.left = Math.random()*100 + "vw";
+        el.style.animationDuration = (4 + Math.random()*4) + "s";
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),8000);
+    }
+}
+
+function sparkleEffect(){
+    for(let i=0;i<80;i++){
+        let sp = document.createElement("div");
+        sp.className = "sparkle";
+        sp.style.left = Math.random()*100 + "vw";
+        sp.style.top = Math.random()*100 + "vh";
+        document.body.appendChild(sp);
+        setTimeout(()=>sp.remove(),1000);
+    }
+}
+
+document.getElementById("bigKiss").onclick = ()=>{
+    floatCelebration();
+    setTimeout(()=>sparkleEffect(),1500);
+
+    setTimeout(()=>{
+        let quote = `"If this kiss could travel through the screen,
+        it would land softly on your lips and stay there for a long, warm, unforgettable moment 💋❤️"`;
+        let box = document.getElementById("quoteBox");
+        box.innerHTML = quote;
+        box.style.display = "block";
+    },2500);
+};
+
+/* 🔒 Password */
+function checkPass(){
+    const correctPassword = "21052002";
+    let input = document.getElementById("passInput").value;
+
+    if(input === correctPassword){
+        document.getElementById("lockScreen").style.display = "none";
+    }else{
+        document.getElementById("errorMsg").innerText = "Wrong Password ❤️";
+    }
+}
+</script>
+
+</body>
+</html>
